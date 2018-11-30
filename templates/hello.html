@@ -1,0 +1,19 @@
+<!doctype html>[]
+<html>
+   <body>
+   
+      <!-- <h1>Cities</h1>
+      <p>{{ cities }}</p> -->
+      <table border = 1>
+         {% for val in data["bindings"] %}
+         
+            <tr>
+               <th>Cities</th>
+               <td><a href='{{ val["item"]["value"] }}'>{{ val["itemLabel"]["value"] }}</a></td>
+            </tr>
+            
+         {% endfor %}
+      </table>
+      
+   </body>
+</html>
