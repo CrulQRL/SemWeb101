@@ -14,7 +14,7 @@ def cities():
     sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
     sparql.setQuery("""SELECT ?item ?itemLabel WHERE {
     ?item wdt:P31 wd:Q5098.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SERVICE wikibase:label {bd:serviceParam wikibase:language "id" .}
     }""")
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
