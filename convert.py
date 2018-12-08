@@ -59,7 +59,6 @@ extract_luas_hutan()
 extract_kelembaban_dan_angin()
 extract_curah_hujan()
 
-# print(g.serialize(format='turtle'))
 n = Namespace('http://srabeb.org/provinsi/')
 qres = g.query(
     """select ?provinsi ?curah ?hutan ?kelembaban ?kecepatan_angin
