@@ -1,5 +1,6 @@
 from rdflib import URIRef, BNode, Literal, Graph, Namespace
 import pandas
+import rdflib
 
 g = Graph()
 
@@ -59,16 +60,22 @@ extract_luas_hutan()
 extract_kelembaban_dan_angin()
 extract_curah_hujan()
 
-n = Namespace('http://srabeb.org/provinsi/')
-qres = g.query(
-    """select ?provinsi ?curah ?hutan ?kelembaban ?kecepatan_angin
-    where {
-        ?provinsi <http://srabeb.org/type/curah_hujan> ?curah .
-        ?provinsi <http://srabeb.org/type/luas_hutan> ?hutan .
-        ?provinsi <http://srabeb.org/type/kelembaban> ?kelembaban .
-        ?provinsi <http://srabeb.org/type/kecepatan_angin> ?kecepatan_angin .
-    }
-    """
-)
-for row in qres:
-    print("provinsi:%s, curah:%s, hutan:%s, kelembaban:%s, kecepatan_angin:%s" % row)
+# n = Namespace('http://srabeb.org/provinsi/')
+
+def get_data_of(province):
+    hasil = []
+    prov = rdflib.URIRef("http://srabeb.org/provinsi/%s"%province)
+    qres = g.query(
+        """select ?provinsi ?curah ?hutan ?kelembaban ?kecepatan_angin
+        where {
+            ?provinsi <http://srabeb.org/type/curah_hujan> ?curah .
+            ?provinsi <http://srabeb.org/type/luas_hutan> ?hutan .
+            ?provinsi <http://srabeb.org/type/kelembaban> ?kelembaban .
+            ?provinsi <http://srabeb.org/type/kecepatan_angin> ?kecepatan_angin .
+        }
+        """
+    , initBindings={'provinsi': prov})
+    for row in qres:
+        hasil.append("provinsi:%s, curah:%s, hutan:%s, kelembaban:%s, kecepatan_angin:%s" % row)
+    return hasil
+
