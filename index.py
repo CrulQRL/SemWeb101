@@ -34,10 +34,10 @@ def aceh(province):
     return render_template(
         'province.html',
         province = province,
-        curah = hasil[1],
-        luas_hutan = hasil[2],
-        kelembaban = hasil[3],
-        kecepatan_angin = hasil[4]
+        curah = hasil[1].split(':')[1],
+        luas_hutan = hasil[2].split(':')[1],
+        kelembaban = hasil[3].split(':')[1],
+        kecepatan_angin = hasil[4].split(':')[1]
     )
 
 if __name__ == '__main__':
