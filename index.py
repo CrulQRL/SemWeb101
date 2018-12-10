@@ -1,7 +1,7 @@
 from flask import Flask, render_template
-from SPARQLWrapper import SPARQLWrapper, JSON
-
-from convert import get_data_of, get_capital_of
+from convert import get_data_of
+from wikidata_query import (
+    get_capital_of, get_list_of_provinces)
 
 app = Flask(__name__)
 
@@ -11,13 +11,8 @@ def hello():
 
 @app.route('/cities')
 def cities():
-    sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-    sparql.setQuery("""SELECT ?item ?itemLabel WHERE {
-    ?item wdt:P31 wd:Q5098.
-    SERVICE wikibase:label {bd:serviceParam wikibase:language "id" .}
-    }""")
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
+    results = get_list_of_provinces()
+
     # print(str(results))
     # for result in results["results"]["bindings"]:
     #     print(result)
@@ -38,7 +33,6 @@ def show_province_detail(province):
         kecepatan_angin = hasil[4].split(':')[1],
         capital = capital
     )
-
 
 if __name__ == '__main__':
    app.run(debug = True)
