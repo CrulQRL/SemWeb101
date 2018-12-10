@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-from convert import get_data_of
+from convert import get_data_of, get_capital_of
 
 app = Flask(__name__)
 
@@ -25,20 +25,21 @@ def cities():
     return render_template('cities.html', data = results["results"])
 
 @app.route('/cities/<province>')
-def aceh(province):
-    print(province)
+def show_province_detail(province):
     provinsi = province.replace(" ", "_")
-    print(provinsi)
     data = get_data_of(provinsi)[0]
     hasil = data.split(',')
+    capital = get_capital_of(provinsi)
     return render_template(
         'province.html',
         province = province,
         curah = hasil[1].split(':')[1],
         luas_hutan = hasil[2].split(':')[1],
         kelembaban = hasil[3].split(':')[1],
-        kecepatan_angin = hasil[4].split(':')[1]
+        kecepatan_angin = hasil[4].split(':')[1],
+        capital = capital
     )
+
 
 if __name__ == '__main__':
    app.run(debug = True)
