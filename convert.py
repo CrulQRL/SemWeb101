@@ -3,6 +3,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 import pandas
 import rdflib
 import requests
+import re
 
 g = Graph()
 
@@ -91,9 +92,13 @@ def get_wikidata_page_id_from(word):
 def get_wikidataid_from_response(response):
     wikidata_id = ''
     for i in response:
-        if 'description' in i and i['description'] == "province of Indonesia":
+        if response_description_valid(i):
             wikidata_id = i['id']
     return wikidata_id
+
+def response_description_valid(response):
+    description = r"[Pp]rovince\s(of|in)\s[Ii]ndonesia"
+    return 'description' in response and re.search(description, response['description'])
 
 def get_capital_of(province):
     wikidata_id = get_wikidata_page_id_from(province)
