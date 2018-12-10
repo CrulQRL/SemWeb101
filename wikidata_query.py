@@ -13,25 +13,6 @@ def get_list_of_provinces():
 
     return results
 
-def get_wikidata_page_id_from(word):
-    url = "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=%s&language=en&format=json"%(word)
-    response = requests.get(url = url).json()['search']
-
-    wikidata_id = get_wikidataid_from_response(response)
-
-    return wikidata_id
-
-def get_wikidataid_from_response(response):
-    wikidata_id = ''
-    for i in response:
-        if response_description_valid(i):
-            wikidata_id = i['id']
-    return wikidata_id
-
-def response_description_valid(response):
-    description = r"[Pp]rovince\s(of|in)\s[Ii]ndonesia"
-    return 'description' in response and re.search(description, response['description'])
-
 def get_capital_of(province):
     wikidata_id = get_wikidata_page_id_from(province)
 
@@ -48,6 +29,25 @@ def get_capital_of(province):
     capital = extract_capital_from_results(results)
     
     return capital
+
+def get_wikidata_page_id_from(word):
+    url = "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=%s&language=en&format=json"%(word)
+    response = requests.get(url = url).json()['search']
+
+    wikidata_id = extract_wikidataid_from_response(response)
+
+    return wikidata_id
+
+def extract_wikidataid_from_response(response):
+    wikidata_id = ''
+    for i in response:
+        if response_description_valid(i):
+            wikidata_id = i['id']
+    return wikidata_id
+
+def response_description_valid(response):
+    description = r"[Pp]rovince\s(of|in)\s[Ii]ndonesia"
+    return 'description' in response and re.search(description, response['description'])
 
 def extract_capital_from_results(results):
     capital = ''
