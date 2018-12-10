@@ -6,10 +6,9 @@
       <p>{{ cities }}</p> -->
       <table border = 1>
          {% for val in data["bindings"] %}
-         
             <tr>
                <th>Cities</th>
-               <td><a href='/cities/{{ val["itemLabel"]["value"] }}'>{{ val["itemLabel"]["value"] }}</a></td>
+               <td><a href='/cities/{{ val["itemLabel"]["value"].replace(" ", "_") }}'>{{ val["itemLabel"]["value"] }}</a></td>
             </tr>
             
          {% endfor %}

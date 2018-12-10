@@ -26,10 +26,9 @@ def cities():
 
 @app.route('/cities/<province>')
 def show_province_detail(province):
-    provinsi = province.replace(" ", "_")
-    data = get_data_of(provinsi)[0]
+    data = get_data_of(province)[0]
     hasil = data.split(',')
-    capital = get_capital_of(provinsi)
+    capital = get_capital_of(province)
     return render_template(
         'province.html',
         province = province,

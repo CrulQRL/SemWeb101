@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
     <head>
-        <title>Provinsi {{ province }}</title>
+        <title>Provinsi {{ province.replace("_", " ") }}</title>
     </head>
    <body>
    
-      <h1>{{ province }}</h1>
+      <h1>{{ province.replace("_", " ") }}</h1>
     
       <h4>Ibu Kota</h4>
       <p>{{ capital }}</p>
