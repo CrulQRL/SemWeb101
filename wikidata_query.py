@@ -13,6 +13,23 @@ def get_list_of_provinces():
 
     return results
 
+def get_map(province):
+    wikidata_id = get_wikidata_page_id_from(province)
+
+    sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+    query = """SELECT ?item ?itemLabel WHERE {
+    wd:%s wdt:P242 ?item.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "id". }
+    }"""%(wikidata_id)
+
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    province_map = extract_itemlabel_from_query_result(results)
+    
+    return province_map
+
 def get_capital_of(province):
     wikidata_id = get_wikidata_page_id_from(province)
 
@@ -26,7 +43,7 @@ def get_capital_of(province):
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
 
-    capital = extract_capital_from_results(results)
+    capital = extract_itemlabel_from_query_result(results)
     
     return capital
 
@@ -49,10 +66,10 @@ def response_description_valid(response):
     description = r"[Pp]rovince\s(of|in)\s[Ii]ndonesia"
     return 'description' in response and re.search(description, response['description'])
 
-def extract_capital_from_results(results):
-    capital = ''
+def extract_itemlabel_from_query_result(results):
+    item_label_value = ''
     try:
-        capital = results['results']['bindings'][0]['itemLabel']['value']
+        item_label_value = results['results']['bindings'][0]['itemLabel']['value']
     except IndexError:
-        capital = '-'
-    return capital
+        item_label_value = '-'
+    return item_label_value
