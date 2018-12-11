@@ -11,16 +11,16 @@
       <p>{{ capital }}</p>
 
       <h4>Curah Hujan</h4>
-      <p>{{ curah }} (mm)</p>
+      <p>{{ data[1].split(':')[1] }} (mm)</p>
 
       <h4>Luas Hutan</h4>
-      <p>{{ luas_hutan }} (ha)</p>
+      <p>{{ data[2].split(':')[1] }} (ha)</p>
 
       <h4>Kelembaban</h4>
-      <p>{{ kelembaban }}</p>
+      <p>{{ data[3].split(':')[1] }}</p>
 
       <h4>Kecepatan Angin</h4>
-      <p>{{ kecepatan_angin }} (m/det)</p>
+      <p>{{ data[4].split(':')[1] }} (m/det)</p>
 
       <h4>Peta Lokasi</h4>
       <img src="{{ province_map }}" alt="Peta Lokasi" style="width:310px;height:119px;">

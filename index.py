@@ -23,17 +23,13 @@ def cities():
 
 @app.route('/cities/<province>')
 def show_province_detail(province):
-    data = get_data_of(province)[0]
-    hasil = data.split(',')
+    data = get_data_of(province)[0].split(',')
     capital = get_capital_of(province)
     province_map = get_map(province)
     return render_template(
         'province.html',
         province = province,
-        curah = hasil[1].split(':')[1],
-        luas_hutan = hasil[2].split(':')[1],
-        kelembaban = hasil[3].split(':')[1],
-        kecepatan_angin = hasil[4].split(':')[1],
+        data = data,
         capital = capital,
         province_map = province_map
     )
