@@ -14,7 +14,7 @@ def get_list_of_provinces():
     return results
 
 def get_map(province):
-    wikidata_id = get_wikidata_page_id_from(province)
+    wikidata_id = get_province_wikidata_id(province)
 
     sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
     query = """SELECT ?item ?itemLabel WHERE {
@@ -31,7 +31,7 @@ def get_map(province):
     return province_map
 
 def get_capital_of(province):
-    wikidata_id = get_wikidata_page_id_from(province)
+    wikidata_id = get_province_wikidata_id(province)
 
     sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
     query = """SELECT ?item ?itemLabel WHERE {
@@ -47,22 +47,22 @@ def get_capital_of(province):
     
     return capital
 
-def get_wikidata_page_id_from(word):
-    url = "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=%s&language=en&format=json"%(word)
+def get_province_wikidata_id(province):
+    url = "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=%s&language=en&format=json"%(province)
     response = requests.get(url = url).json()['search']
 
-    wikidata_id = extract_wikidataid_from_response(response)
+    wikidata_id = extract_province_id_from(response)
 
     return wikidata_id
 
-def extract_wikidataid_from_response(response):
+def extract_province_id_from(response):
     wikidata_id = ''
     for i in response:
-        if response_description_valid(i):
+        if response_description_contains_province(i):
             wikidata_id = i['id']
     return wikidata_id
 
-def response_description_valid(response):
+def response_description_contains_province(response):
     description = r"[Pp]rovince\s(of|in)\s[Ii]ndonesia"
     return 'description' in response and re.search(description, response['description'])
 
