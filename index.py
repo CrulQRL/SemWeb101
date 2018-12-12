@@ -23,7 +23,7 @@ def cities():
 
 @app.route('/cities/<province>')
 def show_province_detail(province):
-    data = get_data_of(province)[0].split(',')
+    data = get_data_of(province).split(',')
     capital = get_capital_of(province)
     province_map = get_map(province)
     return render_template(

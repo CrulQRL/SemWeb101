@@ -63,7 +63,7 @@ extract_curah_hujan()
 # n = Namespace('http://srabeb.org/provinsi/')
 
 def get_data_of(province):
-    hasil = []
+    hasil = ''
     prov = rdflib.URIRef("http://srabeb.org/provinsi/%s"%province)
     qres = g.query(
         """select ?provinsi ?curah ?hutan ?kelembaban ?kecepatan_angin
@@ -75,6 +75,7 @@ def get_data_of(province):
         }
         """
     , initBindings={'provinsi': prov})
+
     for row in qres:
-        hasil.append("provinsi:%s, curah:%s, hutan:%s, kelembaban:%s, kecepatan_angin:%s" % row)
+        hasil = "provinsi:%s, curah:%s, hutan:%s, kelembaban:%s, kecepatan_angin:%s" % row
     return hasil
