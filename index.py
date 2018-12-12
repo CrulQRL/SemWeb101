@@ -11,17 +11,17 @@ app = Flask(__name__)
 def hello():
     return 'Hello, World!'
 
-@app.route('/cities')
-def cities():
+@app.route('/provinces')
+def provinces():
     results = get_list_of_provinces()
 
     # print(str(results))
     # for result in results["results"]["bindings"]:
     #     print(result)
 
-    return render_template('cities.html', data = results["results"])
+    return render_template('provinces_list.html', data = results["results"])
 
-@app.route('/cities/<province>')
+@app.route('/provinces/<province>')
 def show_province_detail(province):
     data = get_data_of(province).split(',')
     capital = get_capital_of(province)
