@@ -2,6 +2,23 @@
 <html>
     <head>
         <title>Provinsi {{ province.replace("_", " ") }}</title>
+        <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 50%;
+            }
+            
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        </style>
     </head>
    <body>
    
@@ -10,20 +27,24 @@
       <h4>Ibu Kota</h4>
       <p>{{ capital }}</p>
 
-      <h4>Curah Hujan</h4>
-      <p>{{ data[1].split(':')[1] }} (mm)</p>
-
-      <h4>Luas Hutan</h4>
-      <p>{{ data[2].split(':')[1] }} (ha)</p>
-
-      <h4>Kelembaban</h4>
-      <p>{{ data[3].split(':')[1] }}</p>
-
-      <h4>Kecepatan Angin</h4>
-      <p>{{ data[4].split(':')[1] }} (m/det)</p>
-
       <h4>Peta Lokasi</h4>
       <img src="{{ province_map }}" alt="Peta Lokasi" style="width:310px;height:119px;">
+
+      <h4>Tabel Statistik</h4>
+      <table>
+          <tr>
+              <th>Curah Hujan</th>
+              <th>Luas Hutan</th>
+              <th>Kelembaban</th>
+              <th>Kecepatan Angin</th>
+          </tr>
+          <tr>
+              <td>{{ data[1].split(':')[1] }} (mm)</td>
+              <td>{{ data[2].split(':')[1] }} (ha)</td>
+              <td>{{ data[3].split(':')[1] }}</td>
+              <td>{{ data[4].split(':')[1] }} (m/det)</td>
+          </tr>
+      </table>
       
    </body>
 </html>
