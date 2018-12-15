@@ -2,7 +2,7 @@ from convert import g
 import rdflib
 
 
-def get_data_of(province):
+def get_province_statistics(province):
     hasil = ''
     prov = rdflib.URIRef("http://srabeb.org/provinsi/%s" % province)
     qres = g.query(
