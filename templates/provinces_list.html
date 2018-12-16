@@ -22,7 +22,7 @@
          <table class="table">
                {% for val in data["bindings"] %}
                   <tr>
-                     <td><a href='/provinces/?p={{ val["itemLabel"]["value"].replace(" ", "_") }}'>{{ val["itemLabel"]["value"] }}</a></td>
+                     <td><a href='/province/?p={{ val["itemLabel"]["value"].replace(" ", "_") }}'>{{ val["itemLabel"]["value"] }}</a></td>
                   </tr>
                {% endfor %}
          </table>

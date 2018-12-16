@@ -10,11 +10,11 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello():
+def index():
     return render_template('index.html')
 
 
-@app.route('/provinces')
+@app.route('/provinces-list')
 def provinces():
     results = get_list_of_provinces()
 
@@ -25,7 +25,7 @@ def provinces():
     return render_template('provinces_list.html', data=results["results"])
 
 
-@app.route('/provinces/', methods=['GET'])
+@app.route('/province/', methods=['GET'])
 def show_province_detail():
     province = request.args.get('p').replace(' ', '_')
     stats = get_province_statistics(province).split(',')
