@@ -50,7 +50,7 @@ def extract_curah_hujan():
     for _, row in data.iterrows():
         province_name = row['Provinsi']
         province = URIRef('http://srabeb.org/provinsi/' + province_name)
-
+        
         curah_hujan_val = row['JumlahCurahHujan']
         curah_hujan_literal = Literal(curah_hujan_val)
 
@@ -64,20 +64,19 @@ def extract_info_faktor_ketahanan_pangan():
     data = pandas.read_csv('src/ketahanan_pangan.csv')
     columns = data.columns
     baseURIRef = 'http://srabeb.org/type/'
-    info_type_names = []
-    for col in columns:
-        
-        info_type.append(col_fix)
-    
+
     for _, row in data.iterrows():
         province_name = row['Provinsi']
         province = URIRef('http://srabeb.org/provinsi/' + province_name)
-
+        
         for col in data.columns:
             info_type_name = col.lower().replace("-","_").replace(" ","_")
-            info_type_uri = baseURIRef + info_type_name
-            info_value = row[col]
-            g.add((province, info_type_name, info_value))
+            info_type_uri = URIRef(baseURIRef + info_type_name)
+            info_value = Literal(row[col])
+            if province:
+                g.add((province, info_type_uri, info_value))
+            else:
+                print('Provinsi tidak ditemukan: ' + province_name)
 
 extract_luas_hutan()
 extract_kelembaban_dan_angin()
