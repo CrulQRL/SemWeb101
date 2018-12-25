@@ -59,9 +59,29 @@ def extract_curah_hujan():
         else:
             print('Provinsi tidak ditemukan: ' + province_name)
 
+def extract_info_faktor_ketahanan_pangan():
+    #Berdasarkan Proposal Gemastik Bidang Penambangan Data, Tim BukaAjaBukaData
+    data = pandas.read_csv('src/ketahanan_pangan.csv')
+    columns = data.columns
+    baseURIRef = 'http://srabeb.org/type/'
+    info_type_names = []
+    for col in columns:
+        
+        info_type.append(col_fix)
+    
+    for _, row in data.iterrows():
+        province_name = row['Provinsi']
+        province = URIRef('http://srabeb.org/provinsi/' + province_name)
+
+        for col in data.columns:
+            info_type_name = col.lower().replace("-","_").replace(" ","_")
+            info_type_uri = baseURIRef + info_type_name
+            info_value = row[col]
+            g.add((province, info_type_name, info_value))
 
 extract_luas_hutan()
 extract_kelembaban_dan_angin()
 extract_curah_hujan()
+extract_info_faktor_ketahanan_pangan()
 
 # n = Namespace('http://srabeb.org/provinsi/')
