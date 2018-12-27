@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import convert
-from graph_query import get_province_statistics
+from graph_query import (
+    get_province_statistics,
+    insert_province_description,
+    get_province_description)
 from wikidata_query import (
     get_capital_of,
     get_list_of_provinces,
@@ -30,6 +33,7 @@ def show_province_detail():
     province = request.args.get('p').replace(' ', '_')
     stats = get_province_statistics(province).split(',')
     capital = get_capital_of(province)
+    description = get_province_description(province)
     province_map = get_map(province)
 
     try:
@@ -39,11 +43,30 @@ def show_province_detail():
     return render_template(
         'province.html',
         province=province,
+        description=description,
         data=stats,
         capital=capital,
         province_map=province_map
     )
 
+@app.route('/submit-description/', methods=['POST'])
+def submit_description():
+    desc = request.form['deskripsiInput']
+    prov = request.form['provinsi'].replace(' ', '_')
+
+    try:
+       insert_province_description(prov, desc)
+       return jsonify({
+           'status' : 'success',
+           'province' : prov,
+           'description' : desc
+       })
+    except:
+        return jsonify({
+           'status' : 'fail',
+           'province' : prov,
+           'description' : desc
+       })
 
 if __name__ == '__main__':
     app.run(debug = True)
