@@ -19,11 +19,38 @@
               background-color: #dddddd;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#tambah-deskripsi").click(function(){
+                    var prov = $("h1").text();
+                    $("#deskripsi-container").replaceWith(
+                        '<div id="input-desc">' +
+                            '<form action="{{ url_for("submit_description") }}" method="post">' +
+                                '<input type="hidden" name="provinsi" value="' + prov + '"></input>' +
+                                '<textarea id="province-desc" rows=5 cols=40 name="deskripsiInput"></textarea><br>' +
+                                '<input type="submit" value="Submit">' +
+                            '</form>' +
+                        '</div>'
+                    );
+                });
+            });
+        </script>
     </head>
    <body>
    
       <h1>{{ province.replace("_", " ") }}</h1>
-    
+
+      <h4>Deskrispi</h4>
+      <div id="deskripsi-container">
+        {% if description == '' %}
+            Provinsi belum memiliki deskripsi.<br>
+            <button id="tambah-deskripsi">Tambah Deskripsi?</button>
+        {% else %}
+            <p>{{ description.split(':')[1] }}</p>
+        {% endif %}
+      </div>
+
       <h4>Ibu Kota</h4>
       <p>{{ capital }}</p>
 

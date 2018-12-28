@@ -1,4 +1,7 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
+from graph_query import (
+    add_provinces_capital_to_graph,
+    add_provinces_map_to_graph)
 import requests
 import re
 
@@ -29,6 +32,7 @@ def get_map(province):
     results = sparql.query().convert()
 
     province_map = extract_itemlabel_from_query_result(results)
+    add_provinces_map_to_graph(province, province_map)
 
     return province_map
 
@@ -47,6 +51,7 @@ def get_capital_of(province):
     results = sparql.query().convert()
 
     capital = extract_itemlabel_from_query_result(results)
+    add_provinces_capital_to_graph(province, capital)
 
     return capital
 
