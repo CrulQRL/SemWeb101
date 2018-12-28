@@ -27,7 +27,7 @@
                     $("#deskripsi-container").replaceWith(
                         '<div id="input-desc">' +
                             '<form action="{{ url_for("submit_description") }}" method="post">' +
-                                '<input type="hidden" name="provinsi" value="' + prov + '"></input><br>' +
+                                '<input type="hidden" name="provinsi" value="' + prov + '"></input>' +
                                 '<textarea id="province-desc" rows=5 cols=40 name="deskripsiInput"></textarea><br>' +
                                 '<input type="submit" value="Submit">' +
                             '</form>' +
