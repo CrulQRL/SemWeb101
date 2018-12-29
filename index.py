@@ -8,7 +8,9 @@ from graph_query import (
 from wikidata_query import (
     get_capital_of,
     get_list_of_provinces,
-    get_map)
+    get_map,
+    get_provinces_capital_data,
+    get_data_capital_of_indonesia)
 
 app = Flask(__name__)
 
@@ -21,10 +23,6 @@ def index():
 @app.route('/provinces-list')
 def provinces():
     results = get_list_of_provinces()
-
-    # print(str(results))
-    # for result in results["results"]["bindings"]:
-    #     print(result)
 
     return render_template('provinces_list.html', data=results["results"])
 
@@ -51,6 +49,21 @@ def show_province_detail():
         province_map=province_map,
         area_info=area_info
     )
+
+
+@app.route('/province/<province>/capital/<capital>')
+def capital_of_province(province, capital):
+    if capital == 'Jakarta':
+        data = get_data_capital_of_indonesia()
+    else:
+        data = get_provinces_capital_data(province)
+    return render_template(
+        'capital.html',
+        province=province,
+        capital=capital,
+        data=data
+    )
+
 
 @app.route('/submit-description/', methods=['POST'])
 def submit_description():
