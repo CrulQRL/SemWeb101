@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+   <head>
+       <title>{{ capital }}</title>
+   </head>
+   <body>
+       <h1>Kota {{ capital }}</h1>
+       <h4>Deskripsi</h4>
+       {% if capital == 'Jakarta' %}
+            <p>Ibukota dari Indonesia</p>
+       {% else %}
+            <p>Ibukota dari provinsi {{ province.replace('_', ' ') }}</p>
+       {% endif %}
+
+       <h4>Luas area</h4>
+       <p>{{ data['areaLabel']['value'] }} km^2</p>
+
+       <h4>Jumlah populasi</h4>
+       <p>{{ data['populationLabel']['value'] }}</p>
+
+       <h4>Zona waktu</h4>
+       <p>{{ data['located_in_time_zoneLabel']['value'] }}</p>
+
+       <h4>Ketinggian di atas permukaan laut</h4>
+       <p>{{ data['elevation_above_sea_levelLabel']['value'] }} meter</p>
+
+       <h4>Peta lokasi</h4>
+       <img src="{{ data['locator_map_imageLabel']['value'] }}" alt="Peta Lokasi" width='326' height="360">
+   </body>
+</html>
