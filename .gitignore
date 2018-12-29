@@ -31,6 +31,13 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+_mailinglist
+.tox/
+.cache/
+.pytest_cache/
+.idea/
+docs/_build/
+venv/
 .installed.cfg
 *.egg
 MANIFEST
@@ -122,5 +129,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+.vscode
 *.DS_Store
 # End of https://www.gitignore.io/api/flask
