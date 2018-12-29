@@ -53,6 +53,8 @@ def get_capital_of(province):
     capital = extract_itemlabel_from_query_result(results)
     add_provinces_capital_to_graph(province, capital)
 
+    if capital == '-':
+        return 'Jakarta'
     return capital
 
 
@@ -85,3 +87,60 @@ def extract_itemlabel_from_query_result(results):
     except IndexError:
         item_label_value = '-'
     return item_label_value
+
+
+def get_provinces_capital_data(province):
+    wikidata_id = get_province_wikidata_id(province)
+
+    query = """SELECT ?areaLabel ?elevation_above_sea_levelLabel ?located_in_time_zoneLabel ?locator_map_imageLabel ?populationLabel WHERE {
+    wd:%s wdt:P36 ?item.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "id". }
+    OPTIONAL { ?item wdt:P2046 ?area. }
+    OPTIONAL { ?item wdt:P2044 ?elevation_above_sea_level. }
+    OPTIONAL { ?item wdt:P1082 ?population. }
+    OPTIONAL { ?item wdt:P242 ?locator_map_image. }
+    OPTIONAL { ?item wdt:P421 ?located_in_time_zone. }
+    }""" % (wikidata_id)
+
+    endpoint_url = "https://query.wikidata.org/sparql"
+    sparql = SPARQLWrapper(endpoint_url)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    return check_null_value_in_(results["results"]["bindings"][0])
+
+
+def check_null_value_in_(result):
+    expected_result_keys = [
+        'areaLabel',
+        'elevation_above_sea_levelLabel',
+        'located_in_time_zoneLabel',
+        'locator_map_imageLabel',
+        'populationLabel'
+    ]
+
+    for i in expected_result_keys:
+        if i not in result:
+            result[i] = {'type': '-', 'value': '-'}
+
+    return result
+
+
+def get_data_capital_of_indonesia():
+    query = """SELECT ?areaLabel ?elevation_above_sea_levelLabel ?located_in_time_zoneLabel ?locator_map_imageLabel ?populationLabel WHERE {
+    wd:Q252 wdt:P36 ?item.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "id". }
+    OPTIONAL { ?item wdt:P2046 ?area. }
+    OPTIONAL { ?item wdt:P2044 ?elevation_above_sea_level. }
+    OPTIONAL { ?item wdt:P1082 ?population. }
+    OPTIONAL { ?item wdt:P242 ?locator_map_image. }
+    OPTIONAL { ?item wdt:P421 ?located_in_time_zone. }
+    }
+    LIMIT 1"""
+    endpoint_url = "https://query.wikidata.org/sparql"
+    sparql = SPARQLWrapper(endpoint_url)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results["results"]["bindings"][0]
