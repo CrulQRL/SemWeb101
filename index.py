@@ -3,7 +3,8 @@ import convert
 from graph_query import (
     get_province_statistics,
     insert_province_description,
-    get_province_description)
+    get_province_description,
+    get_province_area_and_island_info)
 from wikidata_query import (
     get_capital_of,
     get_list_of_provinces,
@@ -35,6 +36,7 @@ def show_province_detail():
     capital = get_capital_of(province)
     description = get_province_description(province)
     province_map = get_map(province)
+    area_info = get_province_area_and_island_info(province).split(',')
 
     try:
         stats[1].split(':')[1]
@@ -46,7 +48,8 @@ def show_province_detail():
         description=description,
         data=stats,
         capital=capital,
-        province_map=province_map
+        province_map=province_map,
+        area_info=area_info
     )
 
 @app.route('/submit-description/', methods=['POST'])

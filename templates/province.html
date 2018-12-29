@@ -57,21 +57,37 @@
       <h4>Peta Lokasi</h4>
       <img src="{{ province_map }}" alt="Peta Lokasi" style="width:310px;height:119px;">
 
-      <h4>Tabel Statistik</h4>
+      <h4>Informasi Iklim</h4>
       <table>
           <tr>
               <th>Curah Hujan</th>
-              <th>Luas Hutan</th>
               <th>Kelembaban</th>
               <th>Kecepatan Angin</th>
           </tr>
           <tr>
               <td>{{ data[1].split(':')[1] }} (mm)</td>
-              <td>{{ data[2].split(':')[1] }} (ha)</td>
               <td>{{ data[3].split(':')[1] }}</td>
               <td>{{ data[4].split(':')[1] }} (m/det)</td>
           </tr>
       </table>
+
+      <br>
+      
+      <h4>Informasi Kawasan</h4>
+      <table>
+        <tr>
+            <th>Luas Hutan</th>
+            <th>Jumlah Pulau</th>
+            <th>Total Luas Wilayah</th>
+            <th>Presentase Terhadap Luas Indonesia</th>
+        </tr>
+        <tr>
+            <td>{{ data[2].split(':')[1] }} (ha)</td>
+            <td>{{ area_info[2].split(':')[1] }}</td>
+            <td>{{ area_info[1].split(':')[1] }} km<sup>2</sup></td>
+            <td>{{ area_info[3].split(':')[1] }}%</td>
+        </tr>
+    </table>
       
    </body>
 </html>

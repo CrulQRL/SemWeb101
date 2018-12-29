@@ -21,6 +21,24 @@ def get_province_statistics(province):
     return hasil
 
 
+def get_province_area_and_island_info(province):
+    hasil = ''
+    prov = rdflib.URIRef("http://srabeb.org/provinsi/%s" % province)
+    qres = g.query(
+        """select ?provinsi ?luas ?pulau ?presentase
+        where {
+            ?provinsi <http://srabeb.org/type/luas> ?luas .
+            ?provinsi <http://srabeb.org/type/pulau> ?pulau .
+            ?provinsi <http://srabeb.org/type/presentase_luas> ?presentase .
+        }
+        """, initBindings={'provinsi': prov})
+
+    for row in qres:
+        hasil = "provinsi:%s, luas:%s, pulau:%s, presentase_luas:%s" % row
+
+    return hasil 
+
+
 def get_province_description(province):
     prov = rdflib.URIRef("http://srabeb.org/provinsi/%s" % province)
     qres = g.query(
