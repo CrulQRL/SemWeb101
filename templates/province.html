@@ -63,7 +63,6 @@
               <th>Curah Hujan</th>
               <th>Kelembaban</th>
               <th>Kecepatan Angin</th>
-              <th>Distribusi Penduduk</th>
               <th>Jumlah Hari Hujan</th>
               <th>Rata-Rata Penyinaran Matahari</th>
 
@@ -72,7 +71,6 @@
               <td>{{ data[1].split(':')[1] }} (mm)</td>
               <td>{{ data[3].split(':')[1] }}</td>
               <td>{{ data[4].split(':')[1] }} (m/det)</td>
-              <td>{{ data[5].split(':')[1] }} </td>
               <td>{{ data[6].split(':')[1] }} (hari)</td>
               <td>{{ data[10].split(':')[1] }} (hari)</td>
           </tr>
@@ -97,6 +95,21 @@
             <td>{{ area_info[1].split(':')[1] }} km<sup>2</sup></td>
             <td>{{ area_info[3].split(':')[1] }}%</td>
             <td>{{ data[7].split(':')[1] }} (ha)</td>
+            <td>{{ data[8].split(':')[1] }} (%)</td>
+            <td>{{ data[9].split(':')[1] }} (%)</td>
+        </tr>
+    </table>
+    <br>
+      
+      <h4>Informasi Kependudukan</h4>
+      <table>
+        <tr>
+            <th>Distribusi Penduduk</th>
+            <th>Persentase Penduduk Miskin (Perkotaan)</th>
+            <th>Persentase Penduduk Miskin (Perdesaan)</th>
+        </tr>
+        <tr>
+            <td>{{ data[5].split(':')[1] }} </td>
             <td>{{ data[8].split(':')[1] }} (%)</td>
             <td>{{ data[9].split(':')[1] }} (%)</td>
         </tr>
